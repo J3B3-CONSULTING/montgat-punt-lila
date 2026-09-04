@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test d'aprofitament · Xarxa de Comerços Punt Lila de Montgat</title>
+<style>
+:root{--lila:#7A1FA2;--lilad:#4A0D6B;--lilal:#F5EAFA;--navy:#12205F;--green:#1E8A4C;--orange:#E55C39;--grey:#555;--bg:#f6f4fb;}
+*{box-sizing:border-box;}
+body{margin:0;font-family:Calibri,'Segoe UI',Arial,sans-serif;color:#222;background:var(--bg);}
+header{background:var(--lilad);color:#fff;padding:14px 22px;}
+.hdr{display:flex;align-items:center;gap:18px;max-width:1180px;margin:0 auto;}
+.hdr-logo{height:56px;width:auto;flex:none;display:block;}
+.hdr-sep{width:1px;align-self:stretch;background:rgba(255,255,255,.28);margin:2px 0;}
+.hdr-txt{min-width:0;}
+header h1{margin:0;font-size:20px;}
+header p{margin:4px 0 0;font-size:13px;opacity:.85;}
+.wrap{max-width:1180px;margin:0 auto;padding:18px;display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;}
+.card{background:#fff;border:1px solid #e2dcec;border-radius:8px;padding:14px 16px;margin-bottom:16px;}
+.card h2{margin:0 0 10px;font-size:16px;color:var(--lilad);border-bottom:2px solid var(--lila);padding-bottom:6px;}
+label.f{display:block;font-size:12px;color:var(--grey);font-weight:bold;margin:8px 0 2px;}
+input[type=text],input[type=email],input[type=date],select,textarea{width:100%;padding:7px 9px;border:1px solid #d5cde0;border-radius:5px;font-size:13px;font-family:inherit;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.small{font-size:11.5px;color:var(--grey);margin-top:6px;line-height:1.4;}
+.intro{font-size:13.5px;line-height:1.5;}
+.intro b{color:var(--lilad);}
+
+/* ===== Mòduls formatius ===== */
+.mod{border:1px solid #e8e0f0;border-radius:6px;padding:10px 12px;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start;}
+.mod .mtag{font-size:11px;font-weight:700;color:#fff;background:var(--lila);border-radius:4px;padding:3px 8px;flex:none;}
+.mod .mtxt{flex:1;min-width:0;}
+.mod .mtit{font-size:14px;font-weight:bold;color:var(--lilad);}
+.mod .mdesc{font-size:12.5px;color:var(--grey);margin-top:2px;}
+.mod .mvid{font-size:12px;margin-top:4px;}
+.mod .mvid a{color:var(--lila);font-weight:bold;}
+.mod .mchk{display:flex;align-items:center;gap:6px;font-size:12.5px;margin-top:6px;cursor:pointer;user-select:none;}
+.mod .mchk input{width:18px;height:18px;accent-color:var(--lila);cursor:pointer;}
+.mod.done{background:#f7fbf8;border-color:#bfe3cd;}
+
+/* ===== Preguntes ===== */
+.q{border:1px solid #e8e0f0;border-radius:6px;padding:12px 14px;margin-bottom:10px;}
+.q .qhead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
+.q .qnum{font-weight:bold;color:var(--lilad);}
+.q .qtxt{font-size:14.5px;margin:2px 0 4px;}
+.q .qmod{font-size:10.5px;font-weight:700;color:#fff;background:var(--lila);border-radius:4px;padding:2px 7px;white-space:nowrap;}
+.opts{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+.opts label{position:relative;font-size:13.5px;border:1px solid #d5cde0;border-radius:6px;padding:8px 12px;cursor:pointer;user-select:none;display:flex;gap:8px;align-items:flex-start;}
+.opts label .ltr{font-weight:bold;color:var(--lila);flex:none;}
+/* El botó de ràdio no es veu, però continua sent accessible amb el teclat i amb lector de pantalla. */
+.opts input{position:absolute;opacity:0;width:1px;height:1px;margin:0;padding:0;border:0;}
+.opts label.sel,.opts label:has(input:checked){background:var(--lilal);border-color:var(--lila);font-weight:bold;}
+.opts label:focus-within{outline:2px solid var(--lila);outline-offset:2px;}
+.q.tf .opts{flex-direction:row;}
+.q.tf .opts label{flex:1;justify-content:center;}
+/* Estat després de corregir */
+.q.ok{border-color:#bfe3cd;background:#f7fbf8;}
+.q.ko{border-color:#f3c7bc;background:#fef8f6;}
+.q .fb{margin-top:9px;font-size:12.5px;border-radius:6px;padding:8px 10px;line-height:1.45;}
+.q.ok .fb{background:#e6f5ec;color:#136e3a;}
+.q.ko .fb{background:#fdecea;color:#a8331c;}
+.q .fb b{font-weight:bold;}
+.q.corrected .opts label{cursor:default;}
+.q.corrected .opts label.good{border-color:var(--green);background:#e9f6ee;}
+.q.corrected .opts label.bad{border-color:var(--orange);background:#fdecea;}
+
+/* ===== Panell de resultat ===== */
+.panel{position:sticky;top:14px;}
+.res{text-align:center;border-radius:10px;padding:16px;color:#fff;margin-bottom:10px;}
+.res .lvl{font-size:26px;font-weight:800;letter-spacing:.5px;}
+.res .sub{font-size:12px;opacity:.92;margin-top:2px;}
+.res.none{background:#8b8496;}.res.apte{background:var(--green);}.res.noapte{background:var(--orange);}
+.score{font-size:34px;font-weight:800;line-height:1;}
+.metric{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px dashed #e7e0ee;}
+.metric b{font-variant-numeric:tabular-nums;}
+.metric .ok{color:var(--green);font-weight:bold;}.metric .ko{color:var(--orange);font-weight:bold;}
+.btn{display:block;width:100%;text-align:center;border:none;border-radius:6px;padding:10px;font-size:13.5px;font-weight:bold;cursor:pointer;margin-top:8px;font-family:inherit;}
+.btn.primary{background:var(--lilad);color:#fff;}
+.btn.go{background:var(--lila);color:#fff;}
+.btn.ok{background:var(--green);color:#fff;}
+.btn.sec{background:#fff;color:var(--lilad);border:1px solid var(--lilad);}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+.progress{height:8px;background:#ece5f3;border-radius:6px;overflow:hidden;margin:8px 0 4px;}
+.progress i{display:block;height:100%;background:var(--lila);width:0;transition:width .2s;}
+.warn{background:#fff7e6;border:1px solid #f0c36d;color:#7a5a12;font-size:12px;padding:8px 10px;border-radius:6px;margin-top:8px;}
+.dbinfo{font-size:12px;color:var(--grey);margin-top:6px;}
+.toolbar{background:#fff;border:1px solid #e2dcec;border-radius:8px;padding:10px 12px;margin-bottom:14px;display:flex;gap:8px;flex-wrap:wrap;}
+.toolbar button{font-size:12.5px;padding:7px 12px;border-radius:6px;border:1px solid var(--lilad);background:#fff;color:var(--lilad);cursor:pointer;font-weight:bold;}
+.badgeprev{text-align:center;margin:0 0 12px;}
+.badgeprev .cap{font-size:11px;color:var(--grey);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;}
+.badgeprev svg{width:100%;max-width:180px;height:auto;}
+
+/* ===== Modals ===== */
+.modal{position:fixed;inset:0;background:rgba(74,13,107,.45);display:none;align-items:flex-start;justify-content:center;z-index:50;padding:30px 14px;overflow:auto;}
+.modal.open{display:flex;}
+.modal .box{background:#fff;border-radius:10px;max-width:980px;width:100%;padding:18px 20px;}
+.modal h2{margin:0 0 4px;color:var(--lilad);}
+.modal .close{float:right;font-size:22px;border:none;background:none;cursor:pointer;color:#888;}
+.modal .subh{margin:14px 0 2px;font-size:14px;color:var(--lilad);font-weight:bold;}
+#acredPreview svg,#adhesiuPreview svg{width:100%;max-width:300px;height:auto;border:1px solid #ece5f3;border-radius:8px;display:block;margin:0 auto;}
+table.db{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px;}
+table.db th,table.db td{border:1px solid #ece5f3;padding:6px 8px;text-align:left;}
+table.db th{background:var(--lilad);color:#fff;font-size:12px;}
+.pill{font-size:11px;font-weight:700;color:#fff;border-radius:10px;padding:2px 9px;}
+.pill.apte{background:var(--green);}.pill.noapte{background:var(--orange);}
+.act{font-size:11.5px;border:1px solid var(--lilad);background:#fff;color:var(--lilad);border-radius:5px;padding:3px 7px;cursor:pointer;margin:1px;}
+.act.del{border-color:var(--orange);color:var(--orange);}
+.dbtools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.dbtools button{font-size:12.5px;padding:7px 11px;border-radius:6px;border:1px solid var(--lilad);background:var(--lilad);color:#fff;cursor:pointer;font-weight:bold;}
+.dbtools button.sec{background:#fff;color:var(--lilad);}
+.hidden{display:none!important;}
+.mobilebar{display:none;}
+
+/* ============ RESPONSIVE: TAULETA ============ */
+@media(max-width:980px){
+  .wrap{grid-template-columns:1fr;padding:14px;}
+  .panel{position:static!important;}
+  .main{order:2;}
+  .panel{order:1;}
+}
+/* ============ RESPONSIVE: MÒBIL ============ */
+@media(max-width:640px){
+  header{padding:13px 16px;}
+  .hdr{gap:12px;}
+  .hdr-logo{height:42px;}
+  header h1{font-size:17px;line-height:1.25;}
+  header p{font-size:12px;}
+  .wrap{padding:10px;gap:12px;}
+  .card{padding:12px;}
+  input[type=text],input[type=email],input[type=date],select,textarea{font-size:16px;padding:10px 11px;}
+  .grid2{grid-template-columns:1fr;}
+  .opts label{padding:12px;font-size:15px;min-height:48px;}
+  .q .qtxt{font-size:15.5px;}
+  .q .qhead{flex-direction:column;}
+  .qmod{align-self:flex-start;}
+  .toolbar{position:sticky;top:0;z-index:20;}
+  .toolbar button{flex:1 1 46%;text-align:center;padding:11px 8px;min-height:46px;}
+  .btn{padding:13px;font-size:15px;min-height:48px;}
+  .modal{padding:10px;}
+  .modal .box{padding:14px;}
+  table.db{font-size:12px;}
+  .act{padding:7px 10px;font-size:12.5px;display:inline-block;margin:2px 0;}
+  body{padding-bottom:62px;}
+  .mobilebar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;align-items:center;gap:10px;
+    background:#fff;border-top:1px solid #e2dcec;box-shadow:0 -2px 8px rgba(74,13,107,.12);padding:8px 12px;}
+  .mobilebar .lvltag{flex:1;font-weight:800;font-size:14px;color:#fff;border-radius:6px;padding:9px 10px;text-align:center;}
+  .mobilebar .lvltag.none{background:#8b8496;}.mobilebar .lvltag.apte{background:var(--green);}.mobilebar .lvltag.noapte{background:var(--orange);}
+  .mobilebar button{border:1px solid var(--lilad);background:var(--lilad);color:#fff;border-radius:6px;padding:10px 12px;font-weight:bold;font-size:13px;white-space:nowrap;}
+}
+@media print{.noprint{display:none;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr" id="hdrLogos">
+    <img class="hdr-logo" id="logoDiba" src="__HDR_DIBA__" alt="Diputació de Barcelona">
+    <img class="hdr-logo" src="__HDR_MONTGAT__" alt="Ajuntament de Montgat">
+    <div class="hdr-sep"></div>
+    <div class="hdr-txt">
+      <h1>Test d'aprofitament · Xarxa de Comerços Punt Lila de Montgat</h1>
+      <p>Formació en línia · correcció automàtica · funciona sense connexió · les dades es desen en aquest dispositiu</p>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="main">
+    <div class="toolbar">
+      <button onclick="nou()">Nou test</button>
+      <button onclick="obrirRegistre()">Registre d'acreditacions</button>
+      <button onclick="desarJSON()">Desar test (JSON)</button>
+      <button onclick="document.getElementById('imp').click()">Carregar test (JSON)</button>
+      <input id="imp" type="file" accept="application/json" style="display:none" onchange="carregarJSON(event)">
+    </div>
+
+    <!-- ============ PAS 1 · IDENTIFICACIÓ ============ -->
+    <div class="card">
+      <h2>1 · Dades de la persona i del comerç</h2>
+      <div class="grid2">
+        <div><label class="f">Nom i cognoms de la persona participant *</label><input type="text" id="m_persona" oninput="recalc()"></div>
+        <div><label class="f">DNI / NIE (opcional)</label><input type="text" id="m_dni"></div>
+        <div><label class="f">Nom comercial de l'establiment *</label><input type="text" id="m_comerc" oninput="recalc()"></div>
+        <div><label class="f">NIF / CIF (opcional)</label><input type="text" id="m_nif"></div>
+        <div><label class="f">Adreça de l'establiment</label><input type="text" id="m_adreca"></div>
+        <div><label class="f">Sector / activitat</label><input type="text" id="m_sector"></div>
+        <div><label class="f">Correu electrònic de contacte</label><input type="email" id="m_correu"></div>
+        <div><label class="f">Data de realització</label><input type="date" id="m_data"></div>
+      </div>
+      <div class="small">* Camps necessaris per emetre l'acreditació i el certificat de formació.</div>
+    </div>
+
+    <!-- ============ PAS 2 · MÒDULS FORMATIUS ============ -->
+    <div class="card">
+      <h2>2 · Mòduls formatius</h2>
+      <div class="intro">Abans de fer el test cal haver vist els <b>cinc mòduls</b> de la formació. Marqueu cada mòdul un cop visualitzat: el test s'activa quan els tingueu tots cinc.</div>
+      <div id="moduls" style="margin-top:10px"></div>
+    </div>
+
+    <!-- ============ PAS 3 · TEST ============ -->
+    <div class="card">
+      <h2>3 · Test d'aprofitament (12 preguntes)</h2>
+      <div class="intro" id="testIntro">
+        Aquest test tanca la formació Punt Lila. Són <b>12 preguntes</b> sobre els cinc mòduls. Per superar-lo cal
+        encertar-ne com a mínim el <b>75 %</b> (<b>9 de 12</b>). És un test <b>d'aprofitament, no selectiu</b>: es pot
+        repetir tantes vegades com calgui. En superar-lo, el comerç queda acreditat com a <b>Punt Lila</b> i es poden
+        descarregar l'acreditació i el certificat de formació.
+      </div>
+      <div id="lockMsg" class="warn">Completeu les dades i marqueu els cinc mòduls per activar el test.</div>
+      <div id="preguntes" class="hidden"></div>
+      <div id="testFoot" class="hidden">
+        <div class="progress"><i id="bar"></i></div>
+        <div class="small" id="progTxt">0 de 12 preguntes respostes.</div>
+        <button class="btn go" id="btnCorregir" onclick="corregirTest()">Corregir el test</button>
+        <button class="btn sec hidden" id="btnRepetir" onclick="repetirTest()">Repetir el test</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PANELL DE RESULTAT ============ -->
+  <div class="panel">
+    <div class="card">
+      <h2>Resultat</h2>
+      <div id="res" class="res none"><div class="lvl">—</div><div class="sub">Encara no s'ha corregit el test</div></div>
+      <div id="badge" class="badgeprev"></div>
+      <div id="metrics"></div>
+      <div id="warn"></div>
+      <button class="btn ok" id="btnAcred" onclick="obrirAcreditacio()">Acreditació Punt Lila</button>
+      <button class="btn ok" id="btnCertW" onclick="generarCertificatWord()">Certificat de formació (Word)</button>
+      <button class="btn ok" id="btnCertP" onclick="generarCertificatPDF()">Certificat de formació (PDF)</button>
+      <button class="btn primary" id="btnDesar" onclick="desarRegistre()">Desar al registre</button>
+      <div class="dbinfo" id="dbinfo"></div>
+      <div class="small">Criteri d'acreditació: <b>9 o més</b> respostes correctes → <b>APTE</b>. Menys de 9 → cal repassar els mòduls i repetir el test. <b>Intents il·limitats.</b></div>
+    </div>
+  </div>
+</div>
+
+<!-- Barra fixa inferior (només mòbil) -->
+<div class="mobilebar" id="mobilebar">
+  <span class="lvltag none" id="mbLvl">—</span>
+  <button onclick="document.querySelector('.panel').scrollIntoView({behavior:'smooth',block:'start'})">Veure resultat</button>
+</div>
+
+<!-- Modal de l'acreditació -->
+<div class="modal" id="acredModal">
+  <div class="box" style="max-width:600px">
+    <button class="close" onclick="tancarAcreditacio()">×</button>
+    <h2>Acreditació Punt Lila</h2>
+    <div class="small">El comerç ha superat la formació i queda acreditat com a <b>Punt Lila</b>. Es lliura l'<b>adhesiu</b> per exhibir a l'aparador i el <b>diploma d'acreditació</b> personalitzat amb el nom del comerç, la data i el codi d'acreditació.</div>
+    <div class="subh">Adhesiu per a l'aparador</div>
+    <div id="adhesiuPreview"></div>
+    <div class="dbtools">
+      <button onclick="descarregarAdhesiuPNG()">Adhesiu (PNG)</button>
+      <button class="sec" onclick="descarregarAdhesiuSVG()">Adhesiu (SVG)</button>
+    </div>
+    <div class="subh">Diploma d'acreditació personalitzat</div>
+    <div id="acredPreview"></div>
+    <div class="dbtools">
+      <button onclick="descarregarAcredPNG()">Imatge (PNG)</button>
+      <button class="sec" onclick="descarregarAcredSVG()">Vectorial (SVG)</button>
+      <button class="sec" onclick="descarregarAcredPDF()">Diploma (PDF)</button>
+    </div>
+    <div class="small">L'acreditació és vàlida durant <b id="vig">2</b> anys des de la data de superació del test. El codi d'acreditació imprès permet comprovar-la al registre municipal.</div>
+  </div>
+</div>
+
+<!-- Modal del registre -->
+<div class="modal" id="repo">
+  <div class="box">
+    <button class="close" onclick="tancarRegistre()">×</button>
+    <h2>Registre de la formació Punt Lila</h2>
+    <div class="small" id="repoInfo"></div>
+    <div id="repoTable"></div>
+    <div class="dbtools">
+      <button onclick="exportCSV()">Exportar el registre (CSV)</button>
+      <button onclick="backupJSON()">Còpia de seguretat completa (JSON)</button>
+      <button class="sec" onclick="document.getElementById('restore').click()">Restaurar còpia (JSON)</button>
+      <button class="sec" onclick="exportSolucionari()">Qüestionari + solucionari (CSV)</button>
+      <input id="restore" type="file" accept="application/json" style="display:none" onchange="restoreJSON(event)">
+    </div>
+    <div class="small" style="margin-top:10px">El registre es desa en aquest dispositiu i navegador. Feu còpies de seguretat periòdiques (botó JSON) i deseu-les en una carpeta de l'Ajuntament. El fitxer «qüestionari + solucionari» serveix per carregar el test a una plataforma externa (tipus ACADEMIC ID) amb correcció automàtica.</div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================================
+   TEST D'APROFITAMENT · XARXA DE COMERÇOS PUNT LILA DE MONTGAT
+   Eina autònoma de formació i acreditació. Un sol fitxer HTML: funciona
+   sense connexió i sense instal·lació, en ordinador, tauleta i mòbil.
+   Font del contingut: document 06 · Fase 4 · Avaluació (test d'aprofitament).
+   ========================================================================== */
+
+/* ---- CONFIGURACIÓ ---- */
+const LLINDAR=9;               // respostes correctes mínimes per ser APTE (9 de 12 = 75%)
+const VIGENCIA_ANYS=2;         // anys de validesa de l'acreditació
+const BARREJA_OPCIONS=true;    // barreja l'ordre de les opcions a cada intent (evita memoritzar la lletra)
+const MOSTRA_LOGO_DIBA=true;   // poseu-ho a false si el programa Punt Lila no porta el logotip de la Diputació
+
+/* ---- MÒDULS FORMATIUS ----
+   [codi, títol, descripció, URL del vídeo (deixeu-ho buit si encara no hi ha enllaç)] */
+const MODULS=[
+ ["M1","Violència masclista: què és i com es manifesta",
+      "Concepte, formes i àmbits de la violència masclista. Mites i falses creences.",""],
+ ["M2","La xarxa de comerços Punt Lila: rol, adhesió i codi ètic",
+      "Què és i què no és un Punt Lila. Caràcter voluntari de l'adhesió i compromisos del codi ètic.",""],
+ ["M3","Com actuar: acollida, escolta i límits de la intervenció",
+      "Primera acollida sense interrogar ni jutjar, actuació davant el dubte i petició de suport.",""],
+ ["M4","Derivació i circuit de serveis",
+      "A qui derivar i quan: 900 900 120, Policia Local, 112, SIAD i Serveis Socials. Consentiment de la persona.",""],
+ ["M5","Registre, confidencialitat i autocura",
+      "El registre intern del protocol, la protecció de dades i l'autocura de qui ha intervingut.",""]
+];
+
+/* ---- QÜESTIONARI ----
+   [núm, mòdul, tipus ('mc' opció múltiple | 'tf' vertader/fals), enunciat,
+    [opcions en l'ordre del document], índex de la resposta correcta, explicació] */
+const PREGUNTES=[
+ [1,"M1","mc","Què entenem per violència masclista a la xarxa Punt Lila?",
+  ["Només l'agressió física dins de la parella.",
+   "Qualsevol violència contra dones, infants o persones LGBTI pel fet de ser-ho o per raó de gènere o orientació.",
+   "Qualsevol conflicte entre clients al comerç.",
+   "Només les situacions que passen de nit."],1,
+  "La violència masclista no es limita a l'agressió física ni a l'àmbit de la parella: inclou qualsevol violència exercida contra dones, infants o persones LGBTI pel fet de ser-ho o per raó de gènere o orientació."],
+ [2,"M1","tf","La violència masclista només es dona en determinats ambients o classes socials.",
+  ["Vertader","Fals"],1,
+  "És un dels mites més estesos. La violència masclista travessa tots els ambients, edats, nivells d'estudis i classes socials."],
+ [3,"M2","mc","Què és un comerç Punt Lila?",
+  ["Un servei especialitzat que substitueix el SIAD.",
+   "Un espai segur de primer contacte i derivació.",
+   "Un punt que ha d'intervenir directament davant una agressió en curs.",
+   "Un distintiu sense cap compromís de manteniment."],1,
+  "El Punt Lila és un espai segur de primer contacte i derivació. Ni substitueix els serveis especialitzats ni ha d'intervenir directament en una agressió en curs, i comporta compromisos de manteniment."],
+ [4,"M2","tf","L'adhesió a la xarxa Punt Lila és voluntària.",
+  ["Vertader","Fals"],0,
+  "L'adhesió és voluntària: el comerç s'hi suma lliurement i, en fer-ho, assumeix els compromisos del codi ètic."],
+ [5,"M2","mc","Quin d'aquests és un compromís del codi ètic?",
+  ["Investigar els fets pel seu compte.",
+   "Donar consells legals a la persona atesa.",
+   "Confidencialitat absoluta sobre la informació de les persones ateses.",
+   "Avisar sempre la família de la persona."],2,
+  "La confidencialitat absoluta és un compromís del codi ètic. Investigar els fets, assessorar legalment o avisar la família queden fora del rol del comerç."],
+ [6,"M3","mc","Quan una persona arriba al comerç en una situació de violència, què cal fer?",
+  ["Demanar-li tots els detalls del que ha passat.",
+   "Oferir-li un espai segur sense interrogar ni jutjar.",
+   "Publicar-ho a les xarxes per demanar ajuda.",
+   "Aconsellar-la sobre què ha de fer amb la seva parella."],1,
+  "La primera acollida consisteix a oferir un espai segur, escoltar sense interrogar ni jutjar i no prendre decisions per la persona."],
+ [7,"M3","tf","Davant el dubte de si és una situació de violència, el millor és no fer res per no equivocar-se.",
+  ["Vertader","Fals"],1,
+  "Davant el dubte cal actuar amb prudència: oferir espai segur, preguntar com podeu ajudar i, si cal, consultar o derivar. La inacció deixa la persona sola."],
+ [8,"M3","mc","Si no et sents preparada per gestionar la situació…",
+  ["L'has de resoldre tu sola igualment.",
+   "Pots demanar ajuda a una companya amb més experiència.",
+   "Li demanes que torni un altre dia.",
+   "Truques directament a la família."],1,
+  "Demanar suport forma part del protocol. Ningú no ha d'afrontar la situació en solitari ni improvisar."],
+ [9,"M4","mc","És divendres a les 20 h. Una dona necessita atenció especialitzada i no hi ha risc imminent. A qui pots derivar?",
+  ["Esperar fins dilluns als Serveis Socials.",
+   "A la línia 900 900 120 o, segons el cas, a la Policia Local.",
+   "A cap servei, perquè estan tancats.",
+   "Només al 112, en qualsevol cas."],1,
+  "La línia 900 900 120 funciona les 24 hores tots els dies de l'any i, segons el cas, es pot recórrer a la Policia Local. El 112 es reserva per a situacions d'emergència amb risc imminent."],
+ [10,"M4","tf","El comerç pot trucar als serveis especialitzats sense el consentiment de la persona sempre que ho consideri oportú.",
+  ["Vertader","Fals"],1,
+  "Cal el consentiment de la persona. L'excepció és el risc imminent per a la seva vida o integritat, o quan hi ha infants implicats: llavors s'activa l'emergència."],
+ [11,"M5","tf","El registre intern del protocol recull les dades personals de la persona atesa.",
+  ["Vertader","Fals"],1,
+  "El registre intern és anònim: recull el tipus de situació i l'actuació feta, mai dades identificatives de la persona atesa."],
+ [12,"M5","mc","Després d'una intervenció, l'autocura de qui ha intervingut…",
+  ["No és necessària si la intervenció va ser breu.",
+   "Forma part del protocol: pots fer una pausa i demanar suport.",
+   "Obliga a explicar el cas a tot el personal.",
+   "És responsabilitat exclusiva del SIAD."],1,
+  "L'autocura forma part del protocol: després d'una intervenció es pot fer una pausa, compartir-ho amb la persona referent i demanar suport."]
+];
+const TOTAL=PREGUNTES.length;
+const MODTIT={};MODULS.forEach(m=>MODTIT[m[0]]=m[1]);
+const LLETRES=["A","B","C","D","E"];
+
+/* ---- AJUDES DE REDACCIÓ (enumeracions i singular/plural) ---- */
+function llista(a){a=a.slice();if(a.length<2)return a.join('');const u=a.pop();return a.join(', ')+' i '+u;}
+function plural(n,sing,pl){return n+' '+(n===1?sing:pl);}
+const PCT=n=>n+' %';   // en català va un espai (aquí, inseparable) abans del símbol %
+
+/* ---- LOGOTIPS INSTITUCIONALS (incrustats: l'eina funciona sense connexió) ---- */
+const LOGO_DIBA_SEAL="__LOGO_DIBA_SEAL__";
+const LOGO_MONTGAT_SEAL="__LOGO_MONTGAT_SEAL__";
+
+/* ============ ESTAT ============ */
+let ordre={};        // ordre de presentació de les opcions per pregunta (índexs originals)
+let corregit=false;  // el test ja s'ha corregit?
+let intent=0;        // número d'intent de la sessió actual
+let ultimResultat=null;
+
+/* ============ RENDER: MÒDULS ============ */
+const contMod=document.getElementById('moduls');
+MODULS.forEach(m=>{
+  const [codi,tit,desc,url]=m;
+  const d=document.createElement('div');d.className='mod';d.id='mod_'+codi;
+  d.innerHTML=`<span class="mtag">${codi}</span>
+    <div class="mtxt">
+      <div class="mtit">${tit}</div>
+      <div class="mdesc">${desc}</div>
+      <div class="mvid">${url?`<a href="${url}" target="_blank" rel="noopener">Veure el vídeo del mòdul ${codi}</a>`:'<span style="color:#999">Vídeo pendent d\'enllaçar.</span>'}</div>
+      <label class="mchk"><input type="checkbox" id="chk_${codi}" onchange="recalc()"> He vist el mòdul ${codi}</label>
+    </div>`;
+  contMod.appendChild(d);
+});
+
+/* ============ RENDER: PREGUNTES ============ */
+function barrejar(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function pintarPreguntes(){
+  const cont=document.getElementById('preguntes');
+  cont.innerHTML='';ordre={};
+  PREGUNTES.forEach(p=>{
+    const [num,mod,tipus,txt,opcions,,]=p;
+    // Les opcions d'elecció múltiple es barregen; vertader/fals manté l'ordre.
+    const idx=opcions.map((_,i)=>i);
+    ordre[num]=(BARREJA_OPCIONS&&tipus==='mc')?barrejar(idx):idx;
+    const d=document.createElement('div');d.className='q '+(tipus==='tf'?'tf':'');d.id='q_'+num;
+    let opts='';
+    ordre[num].forEach((oi,pos)=>{
+      const etq=tipus==='tf'?'':`<span class="ltr">${LLETRES[pos]})</span>`;
+      opts+=`<label id="o_${num}_${oi}"><input type="radio" name="p_${num}" value="${oi}" onchange="recalc()">${etq}<span>${opcions[oi]}</span></label>`;
+    });
+    d.innerHTML=`<div class="qhead"><div><span class="qnum">${num}.</span> <span class="qtxt">${txt}</span></div>
+      <span class="qmod" title="${MODTIT[mod]}">${mod}</span></div>
+      <div class="opts">${opts}</div><div class="fb hidden" id="fb_${num}"></div>`;
+    cont.appendChild(d);
+  });
+}
+
+function resposta(num){const el=document.querySelector(`input[name="p_${num}"]:checked`);return el?parseInt(el.value,10):null;}
+function respostes(){const o={};PREGUNTES.forEach(p=>{const r=resposta(p[0]);o[p[0]]=(r===null?'':r);});return o;}
+
+/* ============ CORRECCIÓ AUTOMÀTICA ============ */
+function corregirRespostes(resp){
+  let encerts=0,contestades=0;
+  const perMod={};MODULS.forEach(m=>perMod[m[0]]=[0,0]);
+  const detall=[];
+  PREGUNTES.forEach(p=>{
+    const [num,mod,,,opcions,correcta]=p;
+    const r=(resp[num]===''||resp[num]==null)?null:parseInt(resp[num],10);
+    const ok=(r===correcta);
+    if(r!==null)contestades++;
+    perMod[mod][1]++;
+    if(ok){encerts++;perMod[mod][0]++;}
+    detall.push({num,mod,ok,triada:r,correcta,textTriada:(r===null?'—':opcions[r]),textCorrecta:opcions[correcta]});
+  });
+  const pct=Math.round(encerts/TOTAL*100);
+  const apte=encerts>=LLINDAR;
+  const repassar=Object.keys(perMod).filter(m=>perMod[m][0]<perMod[m][1]);
+  return {encerts,total:TOTAL,contestades,pct,apte,perMod,repassar,detall};
+}
+
+/* ============ ESTAT DEL FORMULARI ============ */
+function dadesOk(){return val('m_persona')!==''&&val('m_comerc')!=='';}
+function modulsOk(){return MODULS.every(m=>document.getElementById('chk_'+m[0]).checked);}
+function val(id){const e=document.getElementById(id);return e?e.value.trim():'';}
+
+function recalc(){
+  // Estat visual dels mòduls
+  MODULS.forEach(m=>{
+    const done=document.getElementById('chk_'+m[0]).checked;
+    document.getElementById('mod_'+m[0]).classList.toggle('done',done);
+  });
+  const desbloquejat=dadesOk()&&modulsOk();
+  const lock=document.getElementById('lockMsg');
+  const pre=document.getElementById('preguntes');
+  const foot=document.getElementById('testFoot');
+  if(desbloquejat){
+    // Només es (re)pinten les preguntes si encara no hi són: així, desmarcar i tornar
+    // a marcar un mòdul no esborra les respostes ja donades.
+    if(!pre.children.length){pintarPreguntes();intent=Math.max(intent,1);}
+    lock.classList.add('hidden');pre.classList.remove('hidden');foot.classList.remove('hidden');
+  }else{
+    let falta=[];
+    if(!dadesOk())falta.push('el nom de la persona i el nom del comerç');
+    if(!modulsOk()){
+      const pend=MODULS.filter(m=>!document.getElementById('chk_'+m[0]).checked).map(m=>m[0]);
+      falta.push('marcar els mòduls '+pend.join(', '));
+    }
+    lock.innerHTML='Per activar el test cal: '+falta.join(' i ')+'.';
+    lock.classList.remove('hidden');pre.classList.add('hidden');foot.classList.add('hidden');
+  }
+
+  // Progrés
+  const resp=respostes();
+  // Marca visual de l'opció triada. Es fa per classe i no només amb :has(),
+  // perquè els navegadors antics no entenen :has() i no es veuria la tria.
+  PREGUNTES.forEach(p=>{
+    const tri=resp[p[0]];
+    document.querySelectorAll('#q_'+p[0]+' .opts label').forEach(l=>{
+      const inp=l.querySelector('input');
+      l.classList.toggle('sel',inp&&tri!==''&&parseInt(inp.value,10)===parseInt(tri,10));
+    });
+  });
+  const fetes=Object.values(resp).filter(v=>v!=='').length;
+  document.getElementById('bar').style.width=(fetes/TOTAL*100)+'%';
+  document.getElementById('progTxt').textContent=`${fetes} de ${TOTAL} preguntes respostes.`;
+  document.getElementById('btnCorregir').disabled=corregit||fetes<TOTAL;
+
+  if(!corregit)pintarResultatBuit(fetes);
+  refreshDbInfo();
+}
+
+function pintarResultatBuit(fetes){
+  const r=document.getElementById('res');
+  r.className='res none';
+  r.innerHTML='<div class="lvl">—</div><div class="sub">'+(fetes?`${fetes}/${TOTAL} respostes · premeu «Corregir el test»`:'Encara no s\'ha corregit el test')+'</div>';
+  document.getElementById('badge').innerHTML='';
+  document.getElementById('metrics').innerHTML='';
+  document.getElementById('warn').innerHTML='';
+  ['btnAcred','btnCertW','btnCertP','btnDesar'].forEach(id=>document.getElementById(id).disabled=true);
+  const mb=document.getElementById('mbLvl');mb.className='lvltag none';mb.textContent='—';
+}
+
+/* ============ CORREGIR ============ */
+function corregirTest(){
+  const resp=respostes();
+  const falten=PREGUNTES.filter(p=>resp[p[0]]==='').map(p=>p[0]);
+  if(falten.length){alert(falten.length===1?('Falta per respondre la pregunta '+falten[0]+'.'):('Falten preguntes per respondre: '+llista(falten)+'.'));return;}
+  const s=corregirRespostes(resp);
+  ultimResultat=s;corregit=true;
+  // Marcar cada pregunta
+  s.detall.forEach(d=>{
+    const q=document.getElementById('q_'+d.num);
+    q.classList.add('corrected',d.ok?'ok':'ko');
+    q.querySelectorAll('input[type=radio]').forEach(i=>i.disabled=true);
+    const good=document.getElementById('o_'+d.num+'_'+d.correcta);if(good)good.classList.add('good');
+    if(!d.ok&&d.triada!==null){const bad=document.getElementById('o_'+d.num+'_'+d.triada);if(bad)bad.classList.add('bad');}
+    const p=PREGUNTES.find(x=>x[0]===d.num);
+    const fb=document.getElementById('fb_'+d.num);
+    fb.classList.remove('hidden');
+    fb.innerHTML=(d.ok?'<b>Correcte.</b> ':`<b>Incorrecte.</b> La resposta correcta és: «${d.textCorrecta}». `)+p[6]+
+      ` <span style="opacity:.8">(Mòdul ${d.mod} · ${MODTIT[d.mod]})</span>`;
+  });
+  document.getElementById('btnCorregir').classList.add('hidden');
+  document.getElementById('btnRepetir').classList.remove('hidden');
+  pintarResultat(s);
+  desarAlRegistre(true);   // es desa sol: cap test fet en aquest dispositiu no es perd
+  document.querySelector('.panel').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function pintarResultat(s){
+  const r=document.getElementById('res');
+  r.className='res '+(s.apte?'apte':'noapte');
+  r.innerHTML=`<div class="score">${s.encerts}/${s.total}</div>
+    <div class="lvl">${s.apte?'APTE':'NO APTE'}</div>
+    <div class="sub">${PCT(s.pct)} d'encerts · intent ${intent}${s.apte?' · comerç acreditat com a Punt Lila':' · cal repassar i repetir el test'}</div>`;
+  document.getElementById('badge').innerHTML=s.apte?'<div class="cap">Acreditació obtinguda</div>'+buildAdhesiuSvg():'';
+  let m='';
+  MODULS.forEach(mo=>{
+    const [ok,tot]=s.perMod[mo[0]];
+    m+=`<div class="metric"><span title="${mo[1]}">${mo[0]} · ${mo[1].split(':')[0]}</span><b class="${ok===tot?'ok':'ko'}">${ok}/${tot}</b></div>`;
+  });
+  document.getElementById('metrics').innerHTML=m;
+  const w=document.getElementById('warn');
+  if(s.apte){
+    w.innerHTML=s.repassar.length?`<div class="warn">Test superat. Us recomanem que repasseu ${s.repassar.length===1?'el mòdul':'els mòduls'} ${llista(s.repassar)}, en què hi ha hagut alguna errada.</div>`:'';
+  }else{
+    w.innerHTML=`<div class="warn"><b>No s'arriba a ${LLINDAR} encerts.</b> Repasseu ${s.repassar.length===1?'el mòdul':'els mòduls'} ${llista(s.repassar)} abans de repetir el test. Els intents són il·limitats.</div>`;
+  }
+  ['btnAcred','btnCertW','btnCertP'].forEach(id=>document.getElementById(id).disabled=!s.apte);
+  document.getElementById('btnDesar').disabled=false;
+  const mb=document.getElementById('mbLvl');
+  mb.className='lvltag '+(s.apte?'apte':'noapte');
+  mb.textContent=(s.apte?'APTE ':'NO APTE ')+s.encerts+'/'+s.total;
+}
+
+function repetirTest(){
+  if(!confirm('Voleu repetir el test? Es buidaran les respostes actuals (les dades de la persona i del comerç es mantenen).'))return;
+  intent++;corregit=false;ultimResultat=null;
+  pintarPreguntes();
+  document.getElementById('btnCorregir').classList.remove('hidden');
+  document.getElementById('btnRepetir').classList.add('hidden');
+  recalc();
+  document.getElementById('preguntes').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function nou(){
+  if(!confirm('Voleu començar un test nou? Es buidarà tot el formulari (el registre desat es manté).'))return;
+  document.querySelectorAll('input[type=text],input[type=email]').forEach(e=>e.value='');
+  document.querySelectorAll('input[type=checkbox]').forEach(e=>e.checked=false);
+  intent=0;corregit=false;ultimResultat=null;
+  document.getElementById('preguntes').classList.add('hidden');
+  document.getElementById('preguntes').innerHTML='';
+  document.getElementById('btnCorregir').classList.remove('hidden');
+  document.getElementById('btnRepetir').classList.add('hidden');
+  document.getElementById('m_data').value=new Date().toISOString().slice(0,10);
+  recalc();window.scrollTo(0,0);
+}
+
+/* ============ REGISTRE (localStorage) ============ */
+const DBKEY='montgat_puntlila_v1';
+function loadDB(){try{return JSON.parse(localStorage.getItem(DBKEY)||'[]');}catch(e){return [];}}
+let avisatDB=false;
+function saveDB(db){
+  try{localStorage.setItem(DBKEY,JSON.stringify(db));return true;}
+  catch(e){
+    if(!avisatDB){avisatDB=true;
+      alert('Aquest navegador no permet desar el registre (finestra privada o emmagatzematge desactivat). El test i els documents funcionen igualment, però caldrà desar el certificat i la còpia JSON a mà.');}
+    return false;
+  }
+}
+function refreshDbInfo(){const db=loadDB();const ap=db.filter(x=>x.apte).length;
+  document.getElementById('dbinfo').textContent=`Registre: ${plural(db.length,'test desat','tests desats')} en aquest dispositiu (${plural(ap,'comerç acreditat','comerços acreditats')}).`;}
+
+function registreActual(){
+  const s=ultimResultat||corregirRespostes(respostes());
+  const resp=respostes();
+  return {
+    persona:val('m_persona'),dni:val('m_dni'),comerc:val('m_comerc'),nif:val('m_nif'),
+    adreca:val('m_adreca'),sector:val('m_sector'),correu:val('m_correu'),
+    data:val('m_data')||new Date().toISOString().slice(0,10),
+    intent,encerts:s.encerts,total:s.total,pct:s.pct,apte:s.apte,
+    perMod:s.perMod,repassar:s.repassar,resp,ts:new Date().toISOString()
+  };
+}
+
+function desarRegistre(){desarAlRegistre(false);}
+/* auto=true quan el desa l'eina tota sola en corregir el test: no pregunta res
+   i sobreescriu el test del mateix dia, perquè hi consti sempre el darrer intent. */
+function desarAlRegistre(auto){
+  if(!corregit){if(!auto)alert('Corregiu el test abans de desar-lo al registre.');return;}
+  const r=registreActual();
+  if(!r.persona||!r.comerc){if(!auto)alert('Indiqueu el nom de la persona i el del comerç abans de desar.');return;}
+  const db=loadDB();
+  const i=db.findIndex(x=>x.persona===r.persona&&x.comerc===r.comerc&&x.data===r.data);
+  if(i>=0){
+    if(!auto&&!confirm('Ja hi ha un test d\'aquesta persona i comerç en aquesta data: el registre es desa tot sol en corregir. Voleu actualitzar-lo amb les dades i el resultat actuals?'))return;
+    db[i]=r;
+  }else db.push(r);
+  if(!saveDB(db))return;
+  refreshDbInfo();
+  if(!auto)alert('Test desat al registre ('+plural(db.length,'test','tests')+' en total).');
+}
+
+function exportCSV(){
+  const db=loadDB();
+  if(!db.length){alert('No hi ha tests per exportar.');return;}
+  const nums=PREGUNTES.map(p=>p[0]);
+  const head=['Persona','DNI','Comerç','NIF','Adreça','Sector','Correu','Data','Intent','Encerts','Total','%','Resultat','Mòduls a repassar',
+    ...MODULS.map(m=>m[0]),...nums.map(n=>'P'+n)];
+  const rows=[head];
+  db.forEach(r=>{
+    const row=[r.persona,r.dni,r.comerc,r.nif,r.adreca,r.sector,r.correu,r.data,r.intent,r.encerts,r.total,r.pct+'%',
+      r.apte?'APTE':'NO APTE',(r.repassar||[]).join(' ')];
+    MODULS.forEach(m=>{const v=(r.perMod&&r.perMod[m[0]])||['',''];row.push(v[0]+'/'+v[1]);});
+    nums.forEach(n=>{
+      const p=PREGUNTES.find(x=>x[0]===n);const tri=r.resp?r.resp[n]:'';
+      row.push(tri===''||tri==null?'—':((parseInt(tri,10)===p[5])?'OK':'X'));
+    });
+    rows.push(row);
+  });
+  const csv=rows.map(r=>r.map(x=>'"'+String(x==null?'':x).replace(/"/g,'""')+'"').join(';')).join('\r\n');
+  download('﻿'+csv,'registre_formacio_Punt_Lila_Montgat.csv','text/csv;charset=utf-8');
+}
+
+function exportSolucionari(){
+  const rows=[['#','Mòdul','Tipus','Enunciat','Opció A','Opció B','Opció C','Opció D','Resposta correcta','Explicació']];
+  PREGUNTES.forEach(p=>{
+    const [num,mod,tipus,txt,op,co,ex]=p;
+    rows.push([num,mod+' · '+MODTIT[mod],tipus==='mc'?'Opció múltiple':'Vertader/Fals',txt,
+      op[0]||'',op[1]||'',op[2]||'',op[3]||'',
+      (tipus==='mc'?LLETRES[co]+') ':'')+op[co],ex]);
+  });
+  const csv=rows.map(r=>r.map(x=>'"'+String(x==null?'':x).replace(/"/g,'""')+'"').join(';')).join('\r\n');
+  download('﻿'+csv,'questionari_i_solucionari_Punt_Lila_Montgat.csv','text/csv;charset=utf-8');
+}
+
+function desarJSON(){download(JSON.stringify(registreActual(),null,2),(val('m_comerc')||'test').replace(/\s+/g,'_')+'_PuntLila.json','application/json');}
+function carregarJSON(e){
+  const f=e.target.files[0];if(!f)return;const rd=new FileReader();
+  rd.onload=()=>{try{aplicarRegistre(JSON.parse(rd.result));}catch(err){alert('Fitxer no vàlid.');}};
+  rd.readAsText(f);
+}
+function aplicarRegistre(r){
+  ['persona','dni','comerc','nif','adreca','sector','correu','data'].forEach(k=>{const el=document.getElementById('m_'+k);if(el)el.value=r[k]||'';});
+  MODULS.forEach(m=>document.getElementById('chk_'+m[0]).checked=true);
+  corregit=false;ultimResultat=null;intent=r.intent||1;
+  // Cal buidar el test que hi hagi a la pantalla: si no, hi quedarien les marques
+  // de correcció de l'anterior barrejades amb les respostes que ara es carreguen.
+  document.getElementById('preguntes').innerHTML='';
+  document.getElementById('preguntes').classList.add('hidden');
+  document.getElementById('btnCorregir').classList.remove('hidden');
+  document.getElementById('btnRepetir').classList.add('hidden');
+  recalc();
+  // Restaurar les respostes desades (l'ordre de les opcions es torna a generar)
+  if(r.resp){PREGUNTES.forEach(p=>{const v=r.resp[p[0]];if(v!==''&&v!=null){
+    document.querySelectorAll(`input[name="p_${p[0]}"]`).forEach(rb=>rb.checked=(parseInt(rb.value,10)===parseInt(v,10)));}});}
+  recalc();
+  if(r.apte!=null&&r.resp)corregirTest();
+}
+
+function obrirRegistre(){renderRepo();document.getElementById('repo').classList.add('open');}
+function tancarRegistre(){document.getElementById('repo').classList.remove('open');}
+function renderRepo(){
+  const db=loadDB();
+  const ap=db.filter(x=>x.apte).length;
+  document.getElementById('repoInfo').textContent=`${plural(db.length,'test desat','tests desats')} en aquest dispositiu · ${plural(ap,'comerç acreditat','comerços acreditats')} com a Punt Lila.`;
+  if(!db.length){document.getElementById('repoTable').innerHTML='<p style="color:#888">Encara no hi ha cap test desat.</p>';return;}
+  let h='<table class="db"><tr><th>#</th><th>Persona</th><th>Comerç</th><th>Data</th><th>Nota</th><th>Resultat</th><th>Accions</th></tr>';
+  db.forEach((r,i)=>{
+    h+=`<tr><td>${i+1}</td><td>${r.persona||'—'}</td><td>${r.comerc||'—'}</td><td>${r.data||'—'}</td>
+      <td>${r.encerts}/${r.total} (${r.pct}%)</td>
+      <td><span class="pill ${r.apte?'apte':'noapte'}">${r.apte?'APTE':'NO APTE'}</span></td>
+      <td>${r.apte?`<button class="act" onclick="repoAcred(${i})">Acreditació</button>
+          <button class="act" onclick="repoCertW(${i})">Certificat Word</button>
+          <button class="act" onclick="repoCertP(${i})">Certificat PDF</button>`:''}
+          <button class="act del" onclick="repoEsborrar(${i})">Esborrar</button></td></tr>`;
+  });
+  h+='</table>';
+  document.getElementById('repoTable').innerHTML=h;
+}
+function repoRec(i){const r=loadDB()[i];if(!r){alert('Aquest registre ja no hi és. Torneu a obrir el registre d\'acreditacions.');renderRepo();return null;}return r;}
+function repoAcred(i){const r=repoRec(i);if(!r)return;_rec=r;pintarAcreditacio(_rec);document.getElementById('acredModal').classList.add('open');}
+function repoCertW(i){const r=repoRec(i);if(r)generarCertificatWord(r);}
+function repoCertP(i){const r=repoRec(i);if(r)generarCertificatPDF(r);}
+function repoEsborrar(i){const db=loadDB();if(!confirm('Esborrar el test de «'+(db[i].persona||'')+'»?'))return;db.splice(i,1);saveDB(db);renderRepo();refreshDbInfo();}
+function backupJSON(){download(JSON.stringify(loadDB(),null,2),'copia_seguretat_Punt_Lila_Montgat.json','application/json');}
+function restoreJSON(e){const f=e.target.files[0];if(!f)return;const rd=new FileReader();
+  rd.onload=()=>{try{const arr=JSON.parse(rd.result);if(!Array.isArray(arr))throw 0;
+    if(!confirm('Es fusionaran '+plural(arr.length,'registre','registres')+' amb el registre actual. Voleu continuar?'))return;
+    const db=loadDB();arr.forEach(r=>{const j=db.findIndex(x=>x.persona===r.persona&&x.comerc===r.comerc&&x.data===r.data);if(j>=0)db[j]=r;else db.push(r);});
+    saveDB(db);renderRepo();refreshDbInfo();alert('Restauració completada.');
+  }catch(err){alert('Fitxer de còpia no vàlid.');}};
+  rd.readAsText(f);
+}
+
+/* ============ CODIS I DATES ============ */
+function acredCode(r){
+  const d=(r.data||new Date().toISOString().slice(0,10)).replace(/-/g,'');
+  const c=((r.comerc||'XXXX').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,4)||'XXXX');
+  return 'PL-MGT-'+d+'-'+c;
+}
+function venciment(r){
+  const t=r.data||new Date().toISOString().slice(0,10);
+  try{const d=new Date(t);d.setFullYear(d.getFullYear()+VIGENCIA_ANYS);return d.toISOString().slice(0,10);}catch(e){return '';}
+}
+function dataLlarga(iso){
+  try{const [a,m,d]=iso.split('-');const M=['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'];
+    return parseInt(d,10)+' de '+M[parseInt(m,10)-1]+' de '+a;}catch(e){return iso;}
+}
+
+function download(content,filename,mime){
+  const blob=new Blob([content],{type:mime});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;
+  document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);
+}
+function downloadBlob(blob,filename){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);}
+
+/* ============ ACREDITACIÓ: ADHESIU I DIPLOMA (SVG) ============ */
+let _rec=null;
+function svgEsc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+/* Adhesiu quadrat per a l'aparador (sense dades personals) */
+function buildAdhesiuSvg(){
+  const L='#7A1FA2',LD='#4A0D6B';
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" font-family="Calibri,'Segoe UI',Arial,sans-serif">
+  <rect x="0" y="0" width="600" height="600" rx="46" fill="#ffffff"/>
+  <rect x="10" y="10" width="580" height="580" rx="40" fill="${LD}"/>
+  <rect x="26" y="26" width="548" height="548" rx="30" fill="none" stroke="#ffffff" stroke-opacity=".45" stroke-width="2"/>
+  <circle cx="300" cy="232" r="118" fill="${L}"/>
+  <circle cx="300" cy="232" r="118" fill="none" stroke="#ffffff" stroke-width="7"/>
+  <circle cx="300" cy="232" r="52" fill="#ffffff"/>
+  <text x="300" y="404" text-anchor="middle" font-size="62" fill="#ffffff" font-weight="800" letter-spacing="3">PUNT LILA</text>
+  <line x1="150" y1="432" x2="450" y2="432" stroke="#ffffff" stroke-opacity=".5" stroke-width="2"/>
+  <text x="300" y="470" text-anchor="middle" font-size="25" fill="#ffffff" letter-spacing="2">COMERÇ ADHERIT</text>
+  <text x="300" y="506" text-anchor="middle" font-size="25" fill="#ffffff" letter-spacing="2">A LA XARXA PUNT LILA</text>
+  <text x="300" y="548" text-anchor="middle" font-size="28" fill="#ffffff" font-weight="bold" letter-spacing="4">MONTGAT</text>
+</svg>`;
+}
+
+/* Diploma A4 personalitzat */
+function buildAcredSvg(r){
+  const L='#7A1FA2',LD='#4A0D6B',G='#555';
+  const codi=acredCode(r),venc=venciment(r),data=r.data||new Date().toISOString().slice(0,10);
+  const nom=svgEsc((r.comerc||'—').toUpperCase());
+  const nomSize=nom.length>34?22:(nom.length>26?26:(nom.length>18?32:40));
+  const adhesiu='data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(buildAdhesiuSvg())));
+  return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="720" height="960" viewBox="0 0 720 960" font-family="Calibri,'Segoe UI',Arial,sans-serif">
+  <rect x="0" y="0" width="720" height="960" fill="#ffffff"/>
+  <rect x="14" y="14" width="692" height="932" fill="none" stroke="${LD}" stroke-width="3" rx="14"/>
+  <rect x="24" y="24" width="672" height="912" fill="none" stroke="${L}" stroke-width="1" rx="10"/>
+  <text x="360" y="78" text-anchor="middle" font-size="20" fill="${LD}" font-weight="bold" letter-spacing="1.5">AJUNTAMENT DE MONTGAT</text>
+  <text x="360" y="120" text-anchor="middle" font-size="30" fill="${LD}" font-weight="bold">Acreditació Punt Lila</text>
+  <text x="360" y="152" text-anchor="middle" font-size="22" fill="${L}" font-weight="bold">Xarxa de Comerços Punt Lila de Montgat</text>
+  <line x1="210" y1="172" x2="510" y2="172" stroke="${L}" stroke-width="2"/>
+  <image href="${adhesiu}" xlink:href="${adhesiu}" x="215" y="212" width="290" height="290" preserveAspectRatio="xMidYMid meet"/>
+  <text x="360" y="570" text-anchor="middle" font-size="15" fill="${G}" letter-spacing="2">S'ACREDITA QUE L'ESTABLIMENT</text>
+  <text x="360" y="616" text-anchor="middle" font-size="${nomSize}" fill="${LD}" font-weight="bold">${nom}</text>
+  <text x="360" y="652" text-anchor="middle" font-size="15" fill="${G}">ha completat la formació de la xarxa i s'adhereix als compromisos del codi ètic</text>
+  <text x="360" y="676" text-anchor="middle" font-size="15" fill="${G}">com a espai segur de primer contacte i derivació davant la violència masclista.</text>
+  <line x1="120" y1="722" x2="600" y2="722" stroke="#ece5f3" stroke-width="1"/>
+  <text x="200" y="762" text-anchor="middle" font-size="13" fill="#999">DATA D'ACREDITACIÓ</text>
+  <text x="200" y="788" text-anchor="middle" font-size="15" fill="${LD}" font-weight="bold">${svgEsc(dataLlarga(data))}</text>
+  <text x="520" y="762" text-anchor="middle" font-size="13" fill="#999">VÀLIDA FINS A</text>
+  <text x="520" y="788" text-anchor="middle" font-size="15" fill="${LD}" font-weight="bold">${svgEsc(dataLlarga(venc))}</text>
+  <text x="360" y="828" text-anchor="middle" font-size="13" fill="#999">CODI D'ACREDITACIÓ</text>
+  <text x="360" y="852" text-anchor="middle" font-size="17" fill="${L}" font-weight="bold" letter-spacing="1">${svgEsc(codi)}</text>
+  <text x="360" y="878" text-anchor="middle" font-size="10" fill="#bbb">Formació de la Xarxa de Comerços Punt Lila de Montgat · 5 mòduls i test d'aprofitament superat</text>
+  ${MOSTRA_LOGO_DIBA
+    ? `<image href="${LOGO_DIBA_SEAL}" xlink:href="${LOGO_DIBA_SEAL}" x="259" y="898" width="91" height="30" preserveAspectRatio="xMidYMid meet"/>
+       <image href="${LOGO_MONTGAT_SEAL}" xlink:href="${LOGO_MONTGAT_SEAL}" x="390" y="895" width="71" height="36" preserveAspectRatio="xMidYMid meet"/>`
+    : `<image href="${LOGO_MONTGAT_SEAL}" xlink:href="${LOGO_MONTGAT_SEAL}" x="324" y="895" width="71" height="36" preserveAspectRatio="xMidYMid meet"/>`}
+</svg>`;
+}
+
+function obrirAcreditacio(){
+  _rec=registreActual();
+  if(!_rec.apte){alert('L\'acreditació només es pot emetre si s\'ha superat el test (9 encerts o més).');return;}
+  pintarAcreditacio(_rec);
+  document.getElementById('acredModal').classList.add('open');
+}
+function tancarAcreditacio(){document.getElementById('acredModal').classList.remove('open');}
+function pintarAcreditacio(r){
+  document.getElementById('vig').textContent=VIGENCIA_ANYS;
+  document.getElementById('adhesiuPreview').innerHTML=buildAdhesiuSvg();
+  document.getElementById('acredPreview').innerHTML=buildAcredSvg(r);
+}
+function baseNom(r,pref){return pref+'_'+((r.comerc||'comerc').replace(/\s+/g,'_'))+'_'+(r.data||'');}
+function svgToPng(svg,W,H,filename){
+  const img=new Image();
+  const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml;charset=utf-8'}));
+  img.onload=function(){
+    const sc=2,c=document.createElement('canvas');c.width=W*sc;c.height=H*sc;
+    const ctx=c.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height);
+    ctx.drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);
+    c.toBlob(b=>{if(b)downloadBlob(b,filename);else alert('No s\'ha pogut generar la imatge en aquest navegador. Proveu el format SVG.');},'image/png');
+  };
+  img.onerror=function(){URL.revokeObjectURL(url);alert('No s\'ha pogut generar la imatge en aquest navegador. Proveu el format SVG.');};
+  img.src=url;
+}
+function descarregarAdhesiuSVG(){downloadBlob(new Blob([buildAdhesiuSvg()],{type:'image/svg+xml;charset=utf-8'}),'Adhesiu_Punt_Lila_Montgat.svg');}
+function descarregarAdhesiuPNG(){svgToPng(buildAdhesiuSvg(),600,600,'Adhesiu_Punt_Lila_Montgat.png');}
+function descarregarAcredSVG(){if(!_rec)return;downloadBlob(new Blob([buildAcredSvg(_rec)],{type:'image/svg+xml;charset=utf-8'}),baseNom(_rec,'Acreditacio_Punt_Lila')+'.svg');}
+function descarregarAcredPNG(){if(!_rec)return;svgToPng(buildAcredSvg(_rec),720,960,baseNom(_rec,'Acreditacio_Punt_Lila')+'.png');}
+function descarregarAcredPDF(){
+  if(!_rec)return;
+  const w=window.open('','_blank');
+  if(!w){alert('Permeteu les finestres emergents per generar el PDF.');return;}
+  w.document.write(`<!DOCTYPE html><html lang="ca"><head><meta charset="UTF-8"><title>${baseNom(_rec,'Acreditacio_Punt_Lila')}</title>
+   <style>@page{size:A4 portrait;margin:0;}html,body{margin:0;padding:0;}
+   .wrap{width:210mm;min-height:297mm;display:flex;align-items:center;justify-content:center;padding:18mm 0;box-sizing:border-box;}
+   svg{width:170mm;height:auto;}
+   .noprint{position:fixed;top:8px;left:0;right:0;text-align:center;}
+   .noprint button{background:#4A0D6B;color:#fff;border:none;padding:10px 18px;border-radius:6px;font-size:14px;cursor:pointer;font-family:Calibri,Arial,sans-serif;}
+   @media print{.noprint{display:none;}}</style></head><body>
+   <div class="noprint"><button onclick="window.print()">Imprimir / Desar com a PDF</button></div>
+   <div class="wrap">${buildAcredSvg(_rec)}</div></body></html>`);
+  w.document.close();
+  setTimeout(()=>{try{w.focus();w.print();}catch(e){}},400);
+}
+
+/* ============ CERTIFICAT DE FORMACIÓ · WORD (.docx real, sense dependències) ============ */
+function xmlEsc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');}
+function run(text,o){o=o||{};let rpr='<w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>';if(o.b)rpr+='<w:b/>';if(o.color)rpr+='<w:color w:val="'+o.color+'"/>';if(o.size)rpr+='<w:sz w:val="'+(o.size*2)+'"/>';rpr+='</w:rPr>';return '<w:r>'+rpr+'<w:t xml:space="preserve">'+xmlEsc(text)+'</w:t></w:r>';}
+function para(inner,o){o=o||{};let ppr='<w:pPr>';if(o.shd)ppr+='<w:shd w:val="clear" w:color="auto" w:fill="'+o.shd+'"/>';if(o.align)ppr+='<w:jc w:val="'+o.align+'"/>';ppr+='<w:spacing w:before="'+(o.before||0)+'" w:after="'+(o.after==null?100:o.after)+'" w:line="264" w:lineRule="auto"/>';ppr+='</w:pPr>';return '<w:p>'+ppr+inner+'</w:p>';}
+function cell(inner,o){o=o||{};let w=o.w||2000;let tcpr='<w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>';if(o.shd)tcpr+='<w:shd w:val="clear" w:color="auto" w:fill="'+o.shd+'"/>';tcpr+='<w:tcMar><w:top w:w="40" w:type="dxa"/><w:left w:w="80" w:type="dxa"/><w:bottom w:w="40" w:type="dxa"/><w:right w:w="80" w:type="dxa"/></w:tcMar><w:vAlign w:val="center"/></w:tcPr>';return '<w:tc>'+tcpr+inner+'</w:tc>';}
+function tableXml(rowsXml){const b='<w:tblBorders><w:top w:val="single" w:sz="4" w:color="D5CDE0"/><w:left w:val="single" w:sz="4" w:color="D5CDE0"/><w:bottom w:val="single" w:sz="4" w:color="D5CDE0"/><w:right w:val="single" w:sz="4" w:color="D5CDE0"/><w:insideH w:val="single" w:sz="4" w:color="D5CDE0"/><w:insideV w:val="single" w:sz="4" w:color="D5CDE0"/></w:tblBorders>';return '<w:tbl><w:tblPr><w:tblW w:w="0" w:type="auto"/>'+b+'</w:tblPr>'+rowsXml+'</w:tbl>';}
+function rowXml(cells){return '<w:tr>'+cells.join('')+'</w:tr>';}
+
+function buildCertDocumentXml(r){
+  const LILA='7A1FA2',LILAD='4A0D6B',LILAL='F5EAFA',GREEN='1E8A4C',ORANGE='E55C39';
+  const codi=acredCode(r),data=r.data||new Date().toISOString().slice(0,10);
+  let b='';
+  b+=para(run('Ajuntament de Montgat',{size:11,color:LILAD,b:true}),{after:0});
+  b+=para(run('Certificat de formació',{size:20,color:LILAD,b:true}),{after:40});
+  b+=para(run('Xarxa de Comerços Punt Lila de Montgat',{size:13,color:LILA,b:true}),{after:160});
+  b+=para(run((r.apte?'FORMACIÓ SUPERADA · APTE':'FORMACIÓ NO SUPERADA'),{size:20,color:'FFFFFF',b:true}),{shd:(r.apte?GREEN:ORANGE),align:'center',after:30,before:60});
+  b+=para(run(r.encerts+' de '+r.total+' respostes correctes ('+PCT(r.pct)+') · llindar de superació: '+LLINDAR+' de '+r.total+' ('+PCT(Math.round(LLINDAR/r.total*100))+')',{size:11,color:'FFFFFF'}),{shd:(r.apte?GREEN:ORANGE),align:'center',after:160});
+  b+=para(run('Es certifica que la persona i l\'establiment que s\'indiquen a continuació han completat els cinc mòduls de la formació de la Xarxa de Comerços Punt Lila de Montgat i han realitzat el test d\'aprofitament corresponent, amb el resultat que consta en aquest document.',{size:11}),{after:140});
+  const dd=(k,v)=>rowXml([cell(para(run(k,{b:true,size:10}),{after:0}),{w:3200,shd:LILAL}),cell(para(run(v||'—',{size:10}),{after:0}),{w:5800})]);
+  b+=para(run('Dades de la persona i de l\'establiment',{size:13,color:LILAD,b:true}),{after:60,before:60});
+  b+=tableXml(dd('Persona participant',r.persona)+dd('DNI / NIE',r.dni)+dd('Establiment',r.comerc)+dd('NIF / CIF',r.nif)+
+    dd('Adreça',r.adreca)+dd('Sector / activitat',r.sector)+dd('Correu de contacte',r.correu)+
+    dd('Data de realització',dataLlarga(data))+dd('Intent',String(r.intent||1))+dd('Codi d\'acreditació',codi)+
+    (r.apte?dd('Acreditació vàlida fins a',dataLlarga(venciment(r))):''));
+  b+=para('',{after:80});
+  b+=para(run('Contingut de la formació',{size:13,color:LILAD,b:true}),{after:60,before:60});
+  const hd=t=>cell(para(run(t,{b:true,size:10,color:'FFFFFF'}),{after:0}),{shd:LILAD});
+  let mods=rowXml([hd('Mòdul'),hd('Contingut'),hd('Preguntes encertades')]);
+  MODULS.forEach(m=>{
+    const v=(r.perMod&&r.perMod[m[0]])||[0,0];
+    const ok=v[0]===v[1];
+    mods+=rowXml([
+      cell(para(run(m[0],{b:true,size:10,color:LILAD}),{after:0}),{w:900}),
+      cell(para(run(m[1],{size:10}),{after:0}),{w:6200}),
+      cell(para(run(v[0]+' / '+v[1],{size:10,b:true,color:(ok?GREEN:ORANGE)}),{after:0}),{w:1900})
+    ]);
+  });
+  b+=tableXml(mods);
+  b+=para('',{after:80});
+  b+=para(run('Resultat del test d\'aprofitament',{size:13,color:LILAD,b:true}),{after:60,before:60});
+  let det=rowXml([cell(para(run('#',{b:true,size:9,color:'FFFFFF'}),{after:0}),{shd:LILAD,w:500}),
+    cell(para(run('Pregunta',{b:true,size:9,color:'FFFFFF'}),{after:0}),{shd:LILAD,w:6200}),
+    cell(para(run('Mòdul',{b:true,size:9,color:'FFFFFF'}),{after:0}),{shd:LILAD,w:900}),
+    cell(para(run('Resultat',{b:true,size:9,color:'FFFFFF'}),{after:0}),{shd:LILAD,w:1400})]);
+  PREGUNTES.forEach(p=>{
+    const tri=r.resp?r.resp[p[0]]:'';
+    const ok=(tri!==''&&tri!=null&&parseInt(tri,10)===p[5]);
+    det+=rowXml([
+      cell(para(run(String(p[0]),{size:9,b:true,color:LILAD}),{after:0}),{w:500}),
+      cell(para(run(p[3],{size:9}),{after:0}),{w:6200}),
+      cell(para(run(p[1],{size:9}),{after:0}),{w:900}),
+      cell(para(run(ok?'Correcta':'Incorrecta',{size:9,b:true,color:(ok?GREEN:ORANGE)}),{after:0}),{w:1400})
+    ]);
+  });
+  b+=tableXml(det);
+  b+=para('',{after:160});
+  b+=para(run('Montgat, '+dataLlarga(data),{size:11}),{after:220});
+  b+=para(run('Signatura i segell de l\'Ajuntament de Montgat',{size:10,color:'888888'}),{after:40});
+  b+=para(run('Document generat automàticament per l\'eina de formació i acreditació de la Xarxa de Comerços Punt Lila de Montgat. Codi de verificació: '+codi+'.',{size:8,color:'888888'}),{after:40});
+  const sect='<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1000" w:right="1000" w:bottom="1000" w:left="1000" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr>';
+  return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+b+sect+'</w:body></w:document>';
+}
+
+const STYLES_XML='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/><w:sz w:val="20"/></w:rPr></w:rPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style></w:styles>';
+const CONTENT_TYPES='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>';
+const RELS='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>';
+const DOC_RELS='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>';
+
+/* ZIP «store» (sense compressió) + CRC32: genera un .docx real sense cap llibreria */
+const CRCT=(()=>{let t=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?(0xEDB88320^(c>>>1)):(c>>>1);t[n]=c>>>0;}return t;})();
+function crc32(u8){let c=0xFFFFFFFF;for(let i=0;i<u8.length;i++)c=(c>>>8)^CRCT[(c^u8[i])&0xFF];return (c^0xFFFFFFFF)>>>0;}
+function u8(s){return new TextEncoder().encode(s);}
+function push32(a,n){a.push(n&255,(n>>>8)&255,(n>>>16)&255,(n>>>24)&255);}
+function push16(a,n){a.push(n&255,(n>>>8)&255);}
+function concat(arrs){let len=arrs.reduce((s,a)=>s+a.length,0);let out=new Uint8Array(len);let o=0;for(const a of arrs){out.set(a,o);o+=a.length;}return out;}
+function makeDocx(files){
+  let local=[],central=[],offset=0;
+  for(const [name,content] of files){
+    const nameU8=u8(name),data=u8(content),crc=crc32(data);
+    let lf=[];push32(lf,0x04034b50);push16(lf,20);push16(lf,0x0800);push16(lf,0);push16(lf,0);push16(lf,0);push32(lf,crc);push32(lf,data.length);push32(lf,data.length);push16(lf,nameU8.length);push16(lf,0);
+    const lfa=new Uint8Array(lf);
+    local.push(lfa,nameU8,data);
+    let cd=[];push32(cd,0x02014b50);push16(cd,20);push16(cd,20);push16(cd,0x0800);push16(cd,0);push16(cd,0);push16(cd,0);push32(cd,crc);push32(cd,data.length);push32(cd,data.length);push16(cd,nameU8.length);push16(cd,0);push16(cd,0);push16(cd,0);push16(cd,0);push32(cd,0);push32(cd,offset);
+    central.push(new Uint8Array(cd),nameU8);
+    offset+=lfa.length+nameU8.length+data.length;
+  }
+  const centralBytes=concat(central);
+  let eo=[];push32(eo,0x06054b50);push16(eo,0);push16(eo,0);push16(eo,files.length);push16(eo,files.length);push32(eo,centralBytes.length);push32(eo,offset);push16(eo,0);
+  return concat([...local,centralBytes,new Uint8Array(eo)]);
+}
+
+function generarCertificatWord(rec){
+  rec=rec||registreActual();
+  if(!rec.persona||!rec.comerc){alert('Indiqueu el nom de la persona i el del comerç.');return;}
+  const files=[
+    ['[Content_Types].xml',CONTENT_TYPES],
+    ['_rels/.rels',RELS],
+    ['word/document.xml',buildCertDocumentXml(rec)],
+    ['word/styles.xml',STYLES_XML],
+    ['word/_rels/document.xml.rels',DOC_RELS]
+  ];
+  const bytes=makeDocx(files);
+  const fname='Certificat_formacio_Punt_Lila_'+(rec.persona.replace(/\s+/g,'_'))+'_'+(rec.data||'')+'.docx';
+  downloadBlob(new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}),fname);
+}
+
+/* ============ CERTIFICAT DE FORMACIÓ · PDF (impressió del navegador) ============ */
+function buildCertHtml(r){
+  const codi=acredCode(r),data=r.data||new Date().toISOString().slice(0,10);
+  const dd=(k,v)=>`<tr><td class="k">${k}</td><td>${v||'—'}</td></tr>`;
+  const mods=MODULS.map(m=>{const v=(r.perMod&&r.perMod[m[0]])||[0,0];const ok=v[0]===v[1];
+    return `<tr><td><b>${m[0]}</b></td><td>${m[1]}</td><td style="color:${ok?'#1E8A4C':'#E55C39'};font-weight:bold">${v[0]} / ${v[1]}</td></tr>`;}).join('');
+  const det=PREGUNTES.map(p=>{const tri=r.resp?r.resp[p[0]]:'';
+    const ok=(tri!==''&&tri!=null&&parseInt(tri,10)===p[5]);
+    return `<tr><td><b>${p[0]}</b></td><td>${p[3]}</td><td>${p[1]}</td><td style="color:${ok?'#1E8A4C':'#E55C39'};font-weight:bold">${ok?'Correcta':'Incorrecta'}</td></tr>`;}).join('');
+  return `<!DOCTYPE html><html lang="ca"><head><meta charset="UTF-8"><title>Certificat ${r.persona||''}</title>
+  <style>
+   @page{size:A4;margin:14mm;}
+   body{font-family:Calibri,Arial,sans-serif;color:#222;font-size:12px;}
+   h1{color:#4A0D6B;font-size:22px;margin:0;}
+   .sub{color:#7A1FA2;font-weight:bold;font-size:13px;margin:2px 0 14px;}
+   .org{color:#4A0D6B;font-weight:bold;font-size:12px;}
+   .res{color:#fff;text-align:center;border-radius:8px;padding:14px;margin:8px 0 16px;}
+   .res.apte{background:#1E8A4C;}.res.noapte{background:#E55C39;}
+   .res .lvl{font-size:24px;font-weight:800;}.res .mt{font-size:12px;opacity:.92;}
+   h2{color:#4A0D6B;font-size:14px;border-bottom:2px solid #7A1FA2;padding-bottom:3px;margin:16px 0 6px;}
+   table{width:100%;border-collapse:collapse;}
+   td,th{border:1px solid #d5cde0;padding:4px 7px;text-align:left;vertical-align:top;}
+   .info td.k{background:#F5EAFA;font-weight:bold;width:32%;}
+   th{background:#4A0D6B;color:#fff;font-size:11px;}
+   .det td{font-size:11px;}
+   .sign{margin-top:26px;font-size:12px;}
+   .foot{margin-top:14px;color:#888;font-size:9px;}
+   @media print{.noprint{display:none;}}
+   .noprint{text-align:center;margin:14px 0;}
+   .noprint button{background:#4A0D6B;color:#fff;border:none;padding:10px 18px;border-radius:6px;font-size:14px;cursor:pointer;}
+  </style></head><body>
+  <div class="noprint"><button onclick="window.print()">Imprimir / Desar com a PDF</button> &nbsp; <span style="font-size:12px;color:#555">A la finestra d'impressió, trieu «Desa com a PDF» com a destinació.</span></div>
+  <div class="org">Ajuntament de Montgat</div>
+  <h1>Certificat de formació</h1>
+  <div class="sub">Xarxa de Comerços Punt Lila de Montgat</div>
+  <div class="res ${r.apte?'apte':'noapte'}"><div class="lvl">${r.apte?'FORMACIÓ SUPERADA · APTE':'FORMACIÓ NO SUPERADA'}</div>
+    <div class="mt">${r.encerts} de ${r.total} respostes correctes (${PCT(r.pct)}) · llindar de superació: ${LLINDAR} de ${r.total} (${PCT(Math.round(LLINDAR/r.total*100))})</div></div>
+  <p>Es certifica que la persona i l'establiment que s'indiquen a continuació han completat els cinc mòduls de la formació
+  de la Xarxa de Comerços Punt Lila de Montgat i han realitzat el test d'aprofitament corresponent, amb el resultat que consta en aquest document.</p>
+  <h2>Dades de la persona i de l'establiment</h2>
+  <table class="info">${dd('Persona participant',r.persona)}${dd('DNI / NIE',r.dni)}${dd('Establiment',r.comerc)}${dd('NIF / CIF',r.nif)}${dd('Adreça',r.adreca)}${dd('Sector / activitat',r.sector)}${dd('Correu de contacte',r.correu)}${dd('Data de realització',dataLlarga(data))}${dd('Intent',String(r.intent||1))}${dd("Codi d'acreditació",codi)}${r.apte?dd('Acreditació vàlida fins a',dataLlarga(venciment(r))):''}</table>
+  <h2>Contingut de la formació</h2>
+  <table><tr><th>Mòdul</th><th>Contingut</th><th>Preguntes encertades</th></tr>${mods}</table>
+  <h2>Resultat del test d'aprofitament</h2>
+  <table class="det"><tr><th>#</th><th>Pregunta</th><th>Mòdul</th><th>Resultat</th></tr>${det}</table>
+  <div class="sign">Montgat, ${dataLlarga(data)}<br><br><br>Signatura i segell de l'Ajuntament de Montgat</div>
+  <div class="foot">Document generat automàticament per l'eina de formació i acreditació de la Xarxa de Comerços Punt Lila de Montgat. Codi de verificació: ${codi}.</div>
+  </body></html>`;
+}
+function generarCertificatPDF(rec){
+  rec=rec||registreActual();
+  if(!rec.persona||!rec.comerc){alert('Indiqueu el nom de la persona i el del comerç.');return;}
+  const w=window.open('','_blank');
+  if(!w){alert('Permeteu les finestres emergents per generar el PDF.');return;}
+  w.document.write(buildCertHtml(rec));
+  w.document.close();
+  setTimeout(()=>{try{w.focus();w.print();}catch(e){}},400);
+}
+
+/* ============ INICI ============ */
+if(!MOSTRA_LOGO_DIBA){const l=document.getElementById('logoDiba');if(l)l.remove();}
+document.getElementById('m_data').value=new Date().toISOString().slice(0,10);
+recalc();
+</script>
+</body>
+</html>
