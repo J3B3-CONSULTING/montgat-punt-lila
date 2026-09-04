@@ -1,9 +1,15 @@
 # Eina Punt Lila de Montgat — com provar-la
 
 ## Obrir-la
+La manera més ràpida: **https://albertj3b3.github.io/montgat-punt-lila/**
+
+Si la vols tenir al teu ordinador i fer-la servir sense connexió:
 1. Descarrega el fitxer `Test_Punt_Lila_Montgat.html` a una carpeta del teu ordinador.
    Si l'obres des del visor web del SharePoint o del correu no funcionarà: cal baixar-lo.
 2. Doble clic. S'obre al navegador. No cal internet ni instal·lar res.
+
+Compte: el registre de tests és de cada navegador. Si un dia proves l'eina en línia i un altre
+dia des del fitxer baixat, cada versió tindrà el seu registre.
 
 ## Provar el circuit sencer
 1. Omple el nom de la persona i el nom del comerç (són els dos camps necessaris).
