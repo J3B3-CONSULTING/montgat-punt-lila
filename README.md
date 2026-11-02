@@ -1,4 +1,4 @@
-> **Obrir l'eina:** https://albertj3b3.github.io/montgat-punt-lila/
+> **Obrir l'eina:** https://j3b3-consulting.github.io/montgat-punt-lila/
 >
 > Funciona directament al navegador. Per fer-la servir sense connexió, deseu la pàgina
 > (`Ctrl+S`) o baixeu `Test_Punt_Lila_Montgat.html`: és un sol fitxer i no necessita res més.

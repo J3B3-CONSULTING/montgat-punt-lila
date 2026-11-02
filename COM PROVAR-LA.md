@@ -1,7 +1,7 @@
 # Eina Punt Lila de Montgat — com provar-la
 
 ## Obrir-la
-La manera més ràpida: **https://albertj3b3.github.io/montgat-punt-lila/**
+La manera més ràpida: **https://j3b3-consulting.github.io/montgat-punt-lila/**
 
 Si la vols tenir al teu ordinador i fer-la servir sense connexió:
 1. Descarrega el fitxer `Test_Punt_Lila_Montgat.html` a una carpeta del teu ordinador.
